@@ -270,5 +270,6 @@
     <string name="reset">重置</string>
     <string name="settings_image_cache_size_title">图片缓存大小 (MB)</string>
     <string name="pitch">音调</string>
+    <string name="preference_lyric_quality">基础</string>
 
 </resources>

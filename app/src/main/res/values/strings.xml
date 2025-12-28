@@ -352,6 +352,7 @@
     <string name="tempo_pitch_value" translatable="false">%s: %.2fx</string>
     <string name="lock_tempo_pitch">Lock tempo and pitch</string>
     <string name="reset">Reset</string>
+    <string name="preference_lyric_quality">基础</string>
 
 
 </resources>
