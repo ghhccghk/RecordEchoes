@@ -1,15 +1,15 @@
 <br />
 <p align="center">
-  <h2 align="center" style="font-weight: 600">Record Echoes</h2>
+  <h1 align="center" style="font-weight: 600">Record Echoes</h1>
     <h2 align="center" style="font-weight: 600">记录回忆的声音</h2>
 
   <p align="center">
-    一款开源的酷狗第三方客户端</p>
+    <em>一款开源的酷狗第三方客户端</em>
+</p>
 </p>
 
 
 ### 本项目还在建设
-# 
 
 ## 致谢
 #### [Gramophone](https://github.com/FoedusProgramme/Gramophone) 使用了其项目，参考了播放界面和动态颜色获取
