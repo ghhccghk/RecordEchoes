@@ -28,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -57,6 +58,7 @@ import com.ghhccghk.musicplay.ui.components.share.ShareScreen
 import com.ghhccghk.musicplay.ui.components.share.ShareViewModel
 import com.ghhccghk.musicplay.util.SmartImageCache
 import com.mocharealm.accompanist.lyrics.core.model.karaoke.KaraokeLine
+import com.mocharealm.accompanist.lyrics.ui.composable.lyrics.KaraokeBreathingDotsDefaults
 import com.mocharealm.accompanist.lyrics.ui.composable.lyrics.KaraokeLyricsView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -168,11 +170,15 @@ class LyricsFragment : Fragment() {
                 ),
                 verticalFadeMask = Modifier,
                 textColor = if (colorbg) { androidx.compose.ui.graphics.Color(colorOnSecondaryContainerFinalColor) } else { androidx.compose.ui.graphics.Color(Color.WHITE) },
-                breathingDotsColor = if (colorbg) {
-                    androidx.compose.ui.graphics.Color(colorOnSecondaryContainerFinalColor)
-                } else {
-                    androidx.compose.ui.graphics.Color(Color.WHITE)
-                }
+                breathingDotsDefaults = KaraokeBreathingDotsDefaults(
+                    number = 4,
+                    breathingDotsColor = if (colorbg) {
+                        androidx.compose.ui.graphics.Color(colorOnSecondaryContainerFinalColor)
+                    } else {
+                        androidx.compose.ui.graphics.Color(Color.WHITE)
+                    }
+                ),
+                blendMode = BlendMode.SrcOver
             )
 
             if (isShareVisible) {
