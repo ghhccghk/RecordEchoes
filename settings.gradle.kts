@@ -27,7 +27,7 @@ gradle.extra.apply {
 }
 
 
-rootProject.name = "musicplay"
+rootProject.name = "Record Echoes"
 includeBuild(file("media").toPath().toRealPath().toAbsolutePath().toString()) {
     dependencySubstitution {
         substitute(module("androidx.media3:media3-common")).using(project(":lib-common"))

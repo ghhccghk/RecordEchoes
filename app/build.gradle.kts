@@ -191,7 +191,7 @@ android {
 
 
 base {
-    archivesName.set("Music_Player-${android.defaultConfig.versionName}${android.defaultConfig.versionNameSuffix ?: ""}-$buildTime")
+    archivesName.set("Record_Echoes-${android.defaultConfig.versionName}${android.defaultConfig.versionNameSuffix ?: ""}-$buildTime")
 }
 
 androidComponents {
