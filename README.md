@@ -1,10 +1,10 @@
 <br />
 <p align="center">
   <h1 align="center" style="font-weight: 600">Record Echoes</h1>
-    <h2 align="center" style="font-weight: 600">记录回忆的声音</h2>
+    <h2 align="center" style="font-weight: 600"><em>记录回忆的声音</em></h2>
 
   <p align="center">
-    <em>一款开源的酷狗第三方客户端</em>
+    一款开源的酷狗第三方客户端
 </p>
 </p>
 
