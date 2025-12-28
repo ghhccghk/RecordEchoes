@@ -1,7 +1,13 @@
-# Record Echoes
-## 记录回忆的声音
+<br />
+<p align="center">
+  <h2 align="center" style="font-weight: 600">Record Echoes</h2>
+    <h2 align="center" style="font-weight: 600">记录回忆的声音</h2>
 
-### 本项目是第三方酷狗在线客户端
+  <p align="center">
+    一款开源的酷狗第三方客户端</p>
+</p>
+
+
 ### 本项目还在建设
 # 
 
