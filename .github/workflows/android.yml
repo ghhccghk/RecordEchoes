@@ -48,20 +48,29 @@ jobs:
           ./gradlew assemble
           ./gradlew bundleRelease
 
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: Music Player release
-          path: ./app/build/outputs/apk/release
+      - name: Upload Release APK separately
+        run: |
+          for apk in app/build/outputs/apk/release/*.apk; do
+          name=$(basename "$apk" .apk)
+          echo "Uploading $name"
+          gh run upload-artifact "$GITHUB_RUN_ID" "$apk" --name "$name"
+          done
+        env:
+          GH_TOKEN: ${{ github.token }}
 
-      - name: Upload Debug APK
-        uses: actions/upload-artifact@v4
-        with:
-          name:  Music Player  Pay debug
-          path: ./app/build/outputs/apk/debug
+      - name: Upload Debug APK separately
+        run: |
+          for apk in app/build/outputs/apk/debug/*.apk; do
+          name=$(basename "$apk" .apk)
+          echo "Uploading $name"
+          gh run upload-artifact "$GITHUB_RUN_ID" "$apk" --name "$name"
+          done
+        env:
+          GH_TOKEN: ${{ github.token }}
+
 
       - name: Upload Release Mapping
         uses: actions/upload-artifact@v4
         with:
-          name:  Music Player mapping
+          name:  Record Echoes mapping
           path: ./app/build/outputs/mapping/release/mapping.txt
