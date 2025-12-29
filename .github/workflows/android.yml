@@ -48,19 +48,18 @@ jobs:
           ./gradlew assemble
           ./gradlew bundleRelease
 
-      - name: Find APKs
-        id: apks
-        run: |
-          echo "list=$(ls app/build/outputs/apk/release/*.apk | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
-
-      - name: Upload each APK
+      - name: Upload release APKs
         uses: actions/upload-artifact@v4
-        strategy:
-          matrix:
-            apk: ${{ fromJson(steps.apks.outputs.list) }}
         with:
-          name: ${{ matrix.apk }}
-          path: ${{ matrix.apk }}
+          name: Record Echoes release
+          path: ./app/build/outputs/apk/release/*.apk
+
+      - name: Upload debug APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: Record Echoes debug
+          path: ./app/build/outputs/apk/debug/*.apk
+
 
       - name: Upload Release Mapping
         uses: actions/upload-artifact@v4
