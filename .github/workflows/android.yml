@@ -48,26 +48,19 @@ jobs:
           ./gradlew assemble
           ./gradlew bundleRelease
 
-      - name: Upload Release APK separately
+      - name: Find APKs
+        id: apks
         run: |
-          for apk in app/build/outputs/apk/release/*.apk; do
-          name=$(basename "$apk" .apk)
-          echo "Uploading $name"
-          gh run upload-artifact "$GITHUB_RUN_ID" "$apk" --name "$name"
-          done
-        env:
-          GH_TOKEN: ${{ github.token }}
+          echo "list=$(ls app/build/outputs/apk/release/*.apk | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
 
-      - name: Upload Debug APK separately
-        run: |
-          for apk in app/build/outputs/apk/debug/*.apk; do
-          name=$(basename "$apk" .apk)
-          echo "Uploading $name"
-          gh run upload-artifact "$GITHUB_RUN_ID" "$apk" --name "$name"
-          done
-        env:
-          GH_TOKEN: ${{ github.token }}
-
+      - name: Upload each APK
+        uses: actions/upload-artifact@v4
+        strategy:
+          matrix:
+            apk: ${{ fromJson(steps.apks.outputs.list) }}
+        with:
+          name: ${{ matrix.apk }}
+          path: ${{ matrix.apk }}
 
       - name: Upload Release Mapping
         uses: actions/upload-artifact@v4

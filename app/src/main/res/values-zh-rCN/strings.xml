@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">musicplay</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">主页</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_user">用户信息</string>
     <string name="welcome">欢迎</string>
@@ -8,7 +7,6 @@
     <string name="inputmobilephone">输入手机号码</string>
     <string name="sendcode">发送验证码</string>
     <string name="album_art">歌曲封面</string>
-    <string name="default_time">00:00</string>
     <string name="login">登录</string>
     <string name="inputcode">请输入验证码</string>
     <string name="inputphone">请输入手机号</string>
@@ -245,18 +243,22 @@
     <string name="settings_image_cache_size_summary">设置最大缓存</string>
     <string name="settings_song_cache_size_title">设置歌曲缓存大小 (MB)</string>
     <string name="settings_song_cache_size_summary">设置最大缓存</string>
+    <string name="no_app_found">找不到可以进行此操作的应用程序</string>
     <string name="setting_app_name_summary">应用名称</string>
+    <string name="unknown_version">未知版本</string>
     <string name="settings_package_type">软件包类型</string>
     <string name="settings_contributors">贡献者</string>
     <string name="settings_open_source_licenses">开源协议</string>
     <string name="opensource_info">基于 GPL-3.0 协议开源 \n版权所有 %s</string>
     <string name="ok">好的</string>
-    <string name="package_type_explainer">任何人都可以创建 Music Player  APK，因为 Music Player 是开源的。最常见的类型是 Release，可从 F-Droid、Google Play、GitHub 或 IzzyOnDroid 获取。对于其他软件包类型，名称应能合理地提示 APK 的来源。</string>
+    <string name="package_type_explainer">任何人都可以创建 Record Echoes  APK，因为 Record Echoes 是开源的。最常见的类型是 Release，可从 F-Droid、Google Play、GitHub 或 IzzyOnDroid 获取。对于其他软件包类型，名称应能合理地提示 APK 的来源。</string>
     <string name="settingsplay_bar_lyrics_title">播放栏显示歌词</string>
     <string name="settings_play_bar_lyrics_summary">是否让播放栏显示歌词</string>
     <string name="settings_nodejs_version">NodeJs 版本</string>
     <string name="settings_git_hash">Git 哈希</string>
     <string name="settings_build_time">编译时间</string>
+    <string name="offload_enabled_if_gapless">若支持无缝播放则启用</string>
+    <string name="settings_audio_offload">卸载音频（省电）</string>
     <string name="user_vip_info">VIP Info</string>
     <string name="exit_logout">退出登录</string>
     <string name="contributors_ghhccghk">主要维护者</string>
@@ -271,5 +273,10 @@
     <string name="settings_image_cache_size_title">图片缓存大小 (MB)</string>
     <string name="pitch">音调</string>
     <string name="preference_lyric_quality">基础</string>
+    <string name="settings_contributors_click">%s (点击展开更多)</string>
+    <string name="audio_signal_chain">音频信号链</string>
+    <string name="audio_not_initialized">音频播放系统尚未初始化。试着播放些什么吧！</string>
+    <string name="disabled">关闭</string>
+    <string name="offload_enabled_if_supported">启用（如果无缝播放可用）</string>
 
 </resources>

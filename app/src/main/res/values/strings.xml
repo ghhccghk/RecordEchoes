@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Record Echoes</string>
+    <string name="app_name" translatable="false">Record Echoes</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_user">User</string>
@@ -8,7 +8,7 @@
     <string name="inputmobilephone">Input Mobile Phone</string>
     <string name="sendcode">Send Code</string>
     <string name="album_art">Song cover</string>
-    <string name="default_time">00:00</string>
+    <string name="default_time" translatable="false">00:00</string>
     <string name="login">Login</string>
     <string name="inputcode">Please enter the verification code</string>
     <string name="inputphone">Please enter your mobile phone number.</string>
@@ -323,7 +323,7 @@
     <string name="settings_contributors_long" translatable="false"><![CDATA[- LiTaiBai: Maintainer / Lead Developer]]></string>
     <string name="opensource_info">Open-sourced under GPL-3.0\nCopyright %s</string>
     <string name="ok">OK</string>
-    <string name="package_type_explainer">Music Player  APKs can be created by anyone, because Music Player is open source. To help remembering where an APK came from, Music Player provides the package type.  The most common type is Release, which is obtained from F-Droid, Google Play, GitHub or IzzyOnDroid. The CI package type refers to automated builds made for every commit on GitHub. These builds may be unstable. For other package types, the name should give a reasonable hint to where the APK is from.</string>
+    <string name="package_type_explainer">Record Echoes APKs can be created by anyone, because Music Player is open source. To help remembering where an APK came from, Music Player provides the package type.  The most common type is Release, which is obtained from F-Droid, Google Play, GitHub or IzzyOnDroid. The CI package type refers to automated builds made for every commit on GitHub. These builds may be unstable. For other package types, the name should give a reasonable hint to where the APK is from.</string>
     <string name="settingsplay_bar_lyrics_title">The playback bar shows lyrics.</string>
     <string name="settings_play_bar_lyrics_summary">Whether to display lyrics in the playback bar</string>
     <string name="settings_nodejs_version">NodeJs Version</string>
@@ -339,7 +339,7 @@
     <string name="settings_audio_offload">Audio offload (saves battery)</string>
     <string name="user_vip_info">VIP Info</string>
     <string name="exit_logout">Exit Logout</string>
-    <string name="contributors_ghhccghk">主要维护者</string>
+    <string name="contributors_ghhccghk">Primary maintainer</string>
     <string name="shuffle">Shuffle</string>
     <string name="repeat_mode">Repeat mode</string>
     <string name="timer">Sleep timer</string>
