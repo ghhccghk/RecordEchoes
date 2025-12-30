@@ -1,4 +1,4 @@
-package com.ghhccghk.musicplay.ui.lyric
+package com.ghhccghk.musicplay.util.exoplayer
 
 import android.content.Context
 import android.os.Bundle

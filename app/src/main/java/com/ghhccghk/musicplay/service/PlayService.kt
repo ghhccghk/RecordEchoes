@@ -85,8 +85,6 @@ import com.ghhccghk.musicplay.data.libraries.uri
 import com.ghhccghk.musicplay.data.objects.MainViewModelObject
 import com.ghhccghk.musicplay.data.objects.MediaViewModelObject
 import com.ghhccghk.musicplay.data.searchLyric.searchLyricBase
-import com.ghhccghk.musicplay.ui.lyric.MeiZuLyricsMediaNotificationProvider
-import com.ghhccghk.musicplay.ui.lyric.isManualNotificationUpdate
 import com.ghhccghk.musicplay.util.AfFormatInfo
 import com.ghhccghk.musicplay.util.AfFormatTracker
 import com.ghhccghk.musicplay.util.AudioTrackInfo
@@ -106,6 +104,8 @@ import com.ghhccghk.musicplay.util.exoplayer.CircularShuffleOrder
 import com.ghhccghk.musicplay.util.exoplayer.EndedWorkaroundPlayer
 import com.ghhccghk.musicplay.util.exoplayer.GramophoneRenderFactory
 import com.ghhccghk.musicplay.util.exoplayer.LastPlayedManager
+import com.ghhccghk.musicplay.util.exoplayer.MeiZuLyricsMediaNotificationProvider
+import com.ghhccghk.musicplay.util.exoplayer.isManualNotificationUpdate
 import com.ghhccghk.musicplay.util.getBooleanStrict
 import com.ghhccghk.musicplay.util.getIntStrict
 import com.ghhccghk.musicplay.util.others.PlaylistRepository
