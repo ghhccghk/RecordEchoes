@@ -30,11 +30,18 @@ object SmartImageCache {
         return file.exists()
     }
 
-    fun getCachedUri(url: String , customHash: String? = null): Uri? {
-        val fileName = (customHash ?: url).md5()
-        val file = File(cacheDir,fileName)
-        return if (file.exists()) Uri.fromFile(file) else null
+    fun getCachedUri(url: String, customHash: String? = null): Uri? {
+        return try {
+            val fileName = (customHash ?: url).md5()
+            val file = File(cacheDir, fileName)
+//            Log.d("SmartImageCache", "request success 获取到缓存 : $file")
+            if (file.exists()) Uri.fromFile(file) else null
+        } catch (e: Exception) {
+//            Log.e("SmartImageCache", "getCa     chedUri failed", e)
+            null
+        }
     }
+
 
     suspend fun getOrDownload(url: String, customHash: String? = null): Uri? {
         // 打印调用栈

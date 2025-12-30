@@ -11,8 +11,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.media.AudioDeviceInfo
 import android.media.audiofx.AudioEffect
+import android.net.Uri
 import android.os.Binder
 import android.os.Build
 import android.os.Bundle
@@ -24,6 +26,7 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.concurrent.futures.CallbackToFutureAdapter
 import androidx.core.content.ContextCompat
 import androidx.core.content.IntentCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -36,7 +39,9 @@ import androidx.media3.common.MimeTypes
 import androidx.media3.common.Player
 import androidx.media3.common.Timeline
 import androidx.media3.common.TrackSelectionParameters
+import androidx.media3.common.util.BitmapLoader
 import androidx.media3.common.util.UnstableApi
+import androidx.media3.common.util.Util.isBitmapFactorySupportedMimeType
 import androidx.media3.database.StandaloneDatabaseProvider
 import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.datasource.cache.CacheDataSource
@@ -52,6 +57,7 @@ import androidx.media3.exoplayer.source.LoadEventInfo
 import androidx.media3.exoplayer.source.MediaLoadData
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.exoplayer.util.EventLogger
+import androidx.media3.session.CacheBitmapLoader
 import androidx.media3.session.CommandButton
 import androidx.media3.session.DefaultMediaNotificationProvider
 import androidx.media3.session.MediaLibraryService
@@ -60,6 +66,10 @@ import androidx.media3.session.MediaSessionService
 import androidx.media3.session.SessionCommand
 import androidx.media3.session.SessionError
 import androidx.media3.session.SessionResult
+import coil3.BitmapImage
+import coil3.imageLoader
+import coil3.request.ImageRequest
+import coil3.request.allowHardware
 import com.ghhccghk.musicplay.BuildConfig
 import com.ghhccghk.musicplay.MainActivity
 import com.ghhccghk.musicplay.MainActivity.Companion.playbar
@@ -86,6 +96,7 @@ import com.ghhccghk.musicplay.util.LyricSyncManager
 import com.ghhccghk.musicplay.util.NodeBridge
 import com.ghhccghk.musicplay.util.ReplayGainAudioProcessor
 import com.ghhccghk.musicplay.util.ReplayGainUtil
+import com.ghhccghk.musicplay.util.SmartImageCache
 import com.ghhccghk.musicplay.util.Tools
 import com.ghhccghk.musicplay.util.Tools.getBitrate
 import com.ghhccghk.musicplay.util.Tools.getStringStrict
@@ -436,6 +447,11 @@ class PlayService : MediaLibraryService(), MediaSessionService.Listener,
         repo = PlaylistRepository(applicationContext)
         handler = Handler(Looper.getMainLooper())
         rgAp = ReplayGainAudioProcessor()
+        val cacheSizeMBa = prefs.getString("image_cache_size", "50")?.toLongOrNull() ?: 950L
+
+        val cacheSizeBytesa = cacheSizeMBa * 1024 * 1024
+        SmartImageCache.init(applicationContext, maxSize = cacheSizeBytesa)
+
         val filter = IntentFilter(NodeBridge.ACTION_NODE_READY)
         LocalBroadcastManager.getInstance(this).registerReceiver(nodeReadyReceiver, filter)
         serviceScope.launch {
@@ -608,6 +624,101 @@ class PlayService : MediaLibraryService(), MediaSessionService.Listener,
         mediaSession =
             MediaLibrarySession
                 .Builder(this, player, this)
+                // CacheBitmapLoader is required for MeiZuLyricsMediaNotificationProvider
+                .setBitmapLoader(CacheBitmapLoader(object : BitmapLoader {
+                    // Coil-based bitmap loader to reuse Coil's caching and to make sure we use
+                    // the same cover art as the rest of the app, ie MediaStore's cover
+
+                    private val limit by lazy { MediaSession.getBitmapDimensionLimit(this@PlayService) }
+
+                    override fun decodeBitmap(data: ByteArray): ListenableFuture<Bitmap> {
+                        return CallbackToFutureAdapter.getFuture { completer ->
+                            imageLoader.enqueue(
+                                ImageRequest.Builder(this@PlayService)
+                                    .data(data)
+                                    .memoryCacheKey(data.hashCode().toString())
+                                    .size(limit, limit)
+                                    .allowHardware(false)
+                                    .target(
+                                        onStart = { _ ->
+                                            // We don't need or want a placeholder.
+                                        },
+                                        onSuccess = { result ->
+                                            completer.set((result as BitmapImage).bitmap)
+                                        },
+                                        onError = { e ->
+                                            completer.setException(
+                                                Exception(
+                                                    "coil onError called for byte array"
+                                                )
+                                            )
+                                        }
+                                    )
+                                    .build())
+                                .also {
+                                    completer.addCancellationListener(
+                                        { it.dispose() },
+                                        ContextCompat.getMainExecutor(
+                                            this@PlayService
+                                        )
+                                    )
+                                }
+                            "coil load for ${data.hashCode()}"
+                        }
+                    }
+
+                    fun loadBitmap(
+                        uri: Uri,
+                        hash: String?
+                    ): ListenableFuture<Bitmap> {
+                        return CallbackToFutureAdapter.getFuture { completer ->
+                            imageLoader.enqueue(
+                                ImageRequest.Builder(this@PlayService)
+                                    .data(SmartImageCache.getCachedUri(uri.toString(),hash))
+                                    .size(limit, limit)
+                                    .allowHardware(false)
+                                    .target(
+                                        onStart = { _ ->
+                                            // We don't need or want a placeholder.
+                                        },
+                                        onSuccess = { result ->
+                                            completer.set((result as BitmapImage).bitmap)
+                                        },
+                                        onError = { _ ->
+                                            completer.setException(
+                                                Exception(
+                                                    "coil onError called" +
+                                                            " (normal if no album art exists)"
+                                                )
+                                            )
+                                        }
+                                    )
+                                    .build())
+                                .also {
+                                    completer.addCancellationListener(
+                                        { it.dispose() },
+                                        ContextCompat.getMainExecutor(
+                                            this@PlayService
+                                        )
+                                    )
+                                }
+                            "coil load for $uri"
+                        }
+                    }
+
+                    override fun supportsMimeType(mimeType: String): Boolean {
+                        return isBitmapFactorySupportedMimeType(mimeType)
+                    }
+
+                    override fun loadBitmap(uri: Uri): ListenableFuture<Bitmap> {
+                        return loadBitmap(uri, uri.toString())
+                    }
+
+                    override fun loadBitmapFromMetadata(metadata: MediaMetadata): ListenableFuture<Bitmap>? {
+                        val hash = metadata.songHash
+                        return metadata.artworkUri?.let { loadBitmap(it, hash) }
+                    }
+                }))
                 .setSessionActivity(
                     PendingIntent.getActivity(
                         this,

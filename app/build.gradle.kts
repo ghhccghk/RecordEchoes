@@ -289,9 +289,12 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     debugImplementation(libs.androidx.ui.tooling)
 
+    implementation(libs.androidx.concurrent.futures.ktx)
     // UI Tests
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation("io.coil-kt.coil3:coil-compose:3.3.0")
 
     // Optional - Included automatically by material, only add when you need
     // the icons but not the material library (e.g. when using Material3 or a
@@ -355,7 +358,6 @@ dependencies {
 
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.glance)
-    implementation(libs.coil.compose)
     implementation(libs.hiddenapibypass)
     implementation(libs.lyrics.core)
     implementation(libs.lyrics.ui)

@@ -60,7 +60,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection.Ltr
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.ghhccghk.musicplay.R
 import com.ghhccghk.musicplay.data.Contributors
 import com.ghhccghk.musicplay.data.GitHubUser
